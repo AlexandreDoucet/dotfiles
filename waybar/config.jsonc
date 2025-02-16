@@ -33,7 +33,7 @@
   "group/custom-group": {
     "orientation": "horizontal",
     "modules": [
-      "idle_inhibitor",
+      //"idle_inhibitor",
       "custom/bluetooth",
       //"custom/kdeconnect",
       "custom/wifi",
@@ -282,20 +282,20 @@
     "ignore-list": ["kitty", "wezterm", "foot", "footclient"],
   },
 
-  "battery": {
-    "states": {
-      // "good": 95,
-      "warning": 30,
-      "critical": 15,
-    },
-    "format": "{capacity}% {icon}",
-    "format-charging": " {capacity}%",
-    "format-plugged": " {capacity}%",
-    "format-alt": "{icon} {time}",
-    // "format-good": "", // An empty format will hide the module
-    // "format-full": "",
-    "format-icons": ["", "", "", "", ""],
-  },
+//  "battery": {
+//    "states": {
+//      // "good": 95,
+//      "warning": 30,
+//      "critical": 15,
+//    },
+//    "format": "{capacity}% {icon}",
+//    "format-charging": " {capacity}%",
+//    "format-plugged": " {capacity}%",
+//    "format-alt": "{icon} {time}",
+//    // "format-good": "", // An empty format will hide the module
+//    // "format-full": "",
+//    "format-icons": ["", "", "", "", ""],
+//  },
 
   "backlight/slider": {
     "min": 0,
