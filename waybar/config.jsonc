@@ -33,7 +33,7 @@
   "group/custom-group": {
     "orientation": "horizontal",
     "modules": [
-      //"idle_inhibitor",
+      "idle_inhibitor",
       "custom/bluetooth",
       //"custom/kdeconnect",
       "custom/wifi",
@@ -160,6 +160,8 @@
     // "format-bluetooth": "{icon} {volume:>2}% 󰂯", //{format_source}",
     // "format-bluetooth-muted": "󰖁 {icon} 󰂯", //{format_source}",
     "format-icons": ["", "", ""],
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right" : "pavucontrol"
   },
 
   // This waybar build doesn't have support for cava.
