@@ -10,11 +10,3 @@ map ctrl+t new_tab
 confirm_os_window_close 0
 include Nord.conf
 enable_audio_bell no
-
-
-# BEGIN_KITTY_FONTS
-font_family      family="JetBrainsMono Nerd Font Mono"
-bold_font        auto
-italic_font      auto
-bold_italic_font auto
-# END_KITTY_FONTS
