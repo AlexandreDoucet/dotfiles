@@ -1,0 +1,1 @@
+/home/adoucet/.config/hypr/hyprpaper.sh
