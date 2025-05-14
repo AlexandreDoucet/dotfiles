@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sleep 2
+sleep 1
 
 WALLPAPER_DIR="$HOME/Pictures/wallpapers/"
 CURRENT_WALL=$(hyprctl hyprpaper listloaded)

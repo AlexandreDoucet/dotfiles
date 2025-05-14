@@ -1,0 +1,22 @@
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# <file system> <dir> <type> <options> <dump> <pass>
+# /dev/sde2
+UUID=0caf4e92-b9b4-427f-83ac-d15eff87d00b	/         	btrfs     	rw,relatime,compress=zstd:3,ssd,space_cache=v2,subvol=/	0 0
+
+# /dev/sde1
+UUID=1516-2D43      	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+# /dev/sde3
+UUID=c1fb7f8c-c0f6-43f2-9a02-ad568a9b8838	/home     	btrfs     	rw,relatime,compress=zstd:3,ssd,space_cache=v2,subvol=/	0 0
+
+# /dev/nvme01n1p1
+UUID=0b01a310-f921-460f-9ea1-394e1a5bb603	/mnt/nvme     	ext4     	defaults  0  2
+
+
+#//192.168.1.179/HomeMedia /mnt/HomeMedia cifs username=media,password=342438ad,rw,uid=1000,gid=1000,iocharset=utf8,vers=3.0 0 0
+#//192.168.1.179/HomeMedia /mnt/HomeMedia cifs guest,rw,uid=1000,gid=1000,iocharset=utf8,vers=3.0 0 0
+//192.168.1.179/HomeMedia /mnt/HomeMedia cifs credentials=/mnt/.creds/smbcredentials,rw,uid=1000,gid=1000,iocharset=utf8,vers=3.0 0 0
+//192.168.1.179/GitServer /mnt/GitServer cifs credentials=/mnt/.creds/smbcredentials_git,rw,uid=1000,gid=1000,file_mode=0777,dir_mode=0777,iocharset=utf8,vers=3.0,noauto,x-systemd.automount 0 0
+
