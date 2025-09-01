@@ -160,8 +160,10 @@
     // "format-bluetooth": "{icon} {volume:>2}% 󰂯", //{format_source}",
     // "format-bluetooth-muted": "󰖁 {icon} 󰂯", //{format_source}",
     "format-icons": ["", "", ""],
-    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-    "on-click-right" : "pavucontrol"
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    //"on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click" : "pavucontrol"
+    //"on-click-right" : "pavucontrol"
   },
 
   // This waybar build doesn't have support for cava.
