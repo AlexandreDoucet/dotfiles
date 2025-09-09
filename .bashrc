@@ -27,6 +27,29 @@ obsidian() {
   cd -
 }
 
+
+bashrc() {
+  path="$HOME/.config/dotfiles"
+
+  cd "$path" || return
+  git pull
+
+  nvim "$path/.bashrc"
+
+  timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+  git add -A
+
+  # only commit if there are changes
+  if ! git diff --cached --quiet; then
+    git commit -m "Update bashrc - $timestamp"
+    git push
+  fi
+
+  git status
+  cd - >/dev/null || return
+}
+
+
 #PS1='\[\033[01;32m\][\u@\h \[\033[01;34m\]\w\[\033[01;32m\]]\$ \[\033[00m\]$(__git_ps1 "\[\033[01;36m\](%s)\[\033[00m\]")\$ '
 #PS1='\[\033[01;32m\][\u@\h \[\033[01;34m\]\w\[\033[01;32m\]]\[\033[00m\]$(__git_ps1 " \[\033[01;36m\](%s)\[\033[00m\]")\[$(git diff --quiet 2>/dev/null || git status --porcelain 2>/dev/null | grep -q "??" && echo "\033[01;33m *\033[00m")\]\$ '
 
