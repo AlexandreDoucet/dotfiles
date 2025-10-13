@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+
+import re
+import subprocess
+
+# Preferred device keywords in order
+devices_identifier = ["bluez5", "Family"]
+# devices_identifier = ["Family", "bluez5"]
+
+
+def extract_subsection(to_parse: str, start: str, end: str) -> str | None:
+    """
+    Extract everything between start and end (non-greedy), including across newlines.
+    Returns None if not found.
+    """
+    pattern = rf"{re.escape(start)}(.*?){re.escape(end)}"
+    res = re.search(pattern, to_parse, re.DOTALL)
+    return res.group(1).strip() if res else None
+
+
+def Get_name(subsection: str) -> list[str]:
+    """
+    Return a list of device names from a subsection.
+    """
+    if not subsection:
+        return []
+
+    lines = subsection.splitlines()
+    names = []
+    for line in lines:
+        if "[" in line and "." in line:
+            cleaned_line = re.sub(r"^.*?\.\s*", "", line).split("[")[0].strip()
+            if cleaned_line:
+                names.append(cleaned_line)
+    return names
+
+
+def Get_name_from_identifier(id, subsection):
+    lines = subsection.splitlines()
+    for line in lines:
+        if id in line:
+            return Get_name(line)[0]
+
+
+def Get_number(subsection: str, device_name: str | None = None) -> list[str]:
+    """
+    Extract the number at the start of each line (before dot) from the subsection.
+    If device_name is given, only return numbers for lines containing that name.
+    """
+    if not subsection:
+        return None
+
+    lines = subsection.splitlines()
+    for line in lines:
+        if device_name in line:
+            line = re.sub(r"[^0-9]", "", line.split(".")[0])
+            return line
+
+
+# Run wpctl status and capture output
+status = subprocess.run(["wpctl", "status"], capture_output=True, text=True).stdout
+
+# Extract sinks section
+sinks_subsection = extract_subsection(status, "Sinks:", "Sources:")
+# Extract devices section if needed
+devices_subsection = extract_subsection(status, "Devices:", "Sinks:")
+
+
+# Example: get all sink names
+sink_names = Get_name(sinks_subsection)
+
+
+# Example: get sink number for a specific device
+sink_map = {}
+for name in sink_names:
+    sink_ids = Get_number(sinks_subsection, name)
+    sink_map[name] = sink_ids
+
+
+for id in devices_identifier:
+    name = Get_name_from_identifier(id, devices_subsection)
+    for kes in sink_map.keys():
+        if name in kes or kes in name:
+            good = False
+            id = sink_map.get(kes)
+            for line in sinks_subsection.splitlines():
+                if id in line and not "*" in line:
+                    good = True
+                    break
+            if good:
+                subprocess.run(["wpctl", "set-default", sink_map.get(kes)])
+                break
