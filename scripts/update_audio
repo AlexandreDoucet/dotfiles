@@ -57,6 +57,21 @@ def Get_number(subsection: str, device_name: str | None = None) -> list[str]:
             return line
 
 
+def move_all_streams(sink_id: str):
+    """Move all active playback streams to the given sink ID using pw-cli."""
+    result = subprocess.run(["pw-cli", "ls", "Node"], capture_output=True, text=True)
+    for line in result.stdout.splitlines():
+        if (
+            "id " in line and "Stream/Output" in result.stdout
+        ):  # detect playback streams
+            match = re.search(r"id\s+(\d+),", line)
+            if match:
+                stream_id = match.group(1)
+                subprocess.run(
+                    ["pw-cli", "set-prop", stream_id, "node.target", sink_id]
+                )
+
+
 # Run wpctl status and capture output
 status = subprocess.run(["wpctl", "status"], capture_output=True, text=True).stdout
 
@@ -77,16 +92,20 @@ for name in sink_names:
     sink_map[name] = sink_ids
 
 
+good = False
 for id in devices_identifier:
+    if good:
+        break
     name = Get_name_from_identifier(id, devices_subsection)
     for kes in sink_map.keys():
+        if good:
+            break
         if name in kes or kes in name:
-            good = False
             id = sink_map.get(kes)
             for line in sinks_subsection.splitlines():
+
                 if id in line and not "*" in line:
                     good = True
+                    subprocess.run(["wpctl", "set-default", sink_map.get(kes)])
+                    move_all_streams(sink_id)
                     break
-            if good:
-                subprocess.run(["wpctl", "set-default", sink_map.get(kes)])
-                break
