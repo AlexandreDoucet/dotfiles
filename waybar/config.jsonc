@@ -23,6 +23,7 @@
     "temperature",
     "backlight",
     "wireplumber",
+    //"custom/audio-output",
     "clock",
     "custom/separator",
     "group/custom-group",
@@ -30,12 +31,22 @@
     "custom/power",
   ],
 
+
+
+  //"custom/audio-output": {
+  //  "format": "{}",
+  //  "exec": "~/.config/dotfiles/scripts/get_current_audio",
+  //  "on-click": "~/.config/dotfiles/scripts/get_current_audio",
+  //  "interval":5,
+  //  "tooltip":true,
+  //  "tooltip-format": "Audio sink",
+  //},
+
   "group/custom-group": {
     "orientation": "horizontal",
     "modules": [
       "idle_inhibitor",
       "custom/bluetooth",
-      //"custom/kdeconnect",
       "custom/wifi",
     ],
   },
@@ -134,25 +145,25 @@
     "format-alt": "{ifname}: {ipaddr}/{cidr}",
   },
 
-  "pulseaudio": {
-    // "scroll-step": 1, // %, can be a float
-    "format": "{icon} {volume}%", //{format_source}",
-    "format-bluetooth": "{icon} {volume}% 󰂯", //{format_source}",
-    "format-bluetooth-muted": "󰖁 {icon} 󰂯", //{format_source}",
-    "format-muted": "󰖁 {volume}%",
-    // "format-source": " {volume}%",
-    // "format-source-muted": "",
-    "format-icons": {
-      "headphone": "󰋋",
-      "hands-free": "󱡒",
-      "headset": "󰋎",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["", "", ""],
-    },
-    "on-click": "pavucontrol",
-  },
+  //"pulseaudio": {
+  //  // "scroll-step": 1, // %, can be a float
+  //  "format": "{icon} {volume}%", //{format_source}",
+  //  "format-bluetooth": "{icon} {volume}% 󰂯", //{format_source}",
+  //  "format-bluetooth-muted": "󰖁 {icon} 󰂯", //{format_source}",
+  //  "format-muted": "󰖁 {volume}%",
+  //  // "format-source": " {volume}%",
+  //  // "format-source-muted": "",
+  //  "format-icons": {
+  //    "headphone": "󰋋",
+  //    "hands-free": "󱡒",
+  //    "headset": "󰋎",
+  //    "phone": "",
+  //    "portable": "",
+  //    "car": "",
+  //    "default": ["", "", ""],
+  //  },
+  //  "on-click": "pavucontrol",
+  //},
 
   "wireplumber": {
     "format": "{icon} {volume:>3}%",
@@ -197,6 +208,8 @@
       "activated": "󰈈",
       "deactivated": "󰈉",
     },
+    "on-click":{}
+    //todo
   },
 
   "custom/power": {
@@ -207,13 +220,6 @@
     "tooltip-format": "Power Menu",
   },
 
-  "custom/kdeconnect": {
-    "format": "{icon}",
-    "format-icons": "",
-    "exec-on-event": "true",
-    "on-click": "kdeconnect-app",
-    "tooltip-format": "KDE Connect",
-  },
 
   "custom/bluetooth": {
     "format": "{icon}",
