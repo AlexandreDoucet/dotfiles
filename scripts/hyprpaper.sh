@@ -17,5 +17,7 @@ else
   WALLPAPER=$(printf "%s\n" "${WALLPAPERS[@]}" | shuf -n 1)
 fi
 
+WALLPAPER=$WALLPAPER_DIR"/wallhaven-q22r57_3440x1440.png"
+
 # Apply the selected wallpaper
 hyprctl hyprpaper reload ,"$WALLPAPER"
