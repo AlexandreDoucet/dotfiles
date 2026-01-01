@@ -1,2 +1,5 @@
+# Add this to the systemd autostartup.
+sudo pacman -Sc --noconfirm
 
-sudo pacman -Sc
+
+
