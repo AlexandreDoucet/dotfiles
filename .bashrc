@@ -13,7 +13,7 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias hypr_reload_paper='sh ~/.config/hypr/hyprpaper'
 alias obsidian_a='cd ~/Documents/ObsidianVault/Obsidian/ && git pull && nvim ~/Documents/ObsidianVault/Obsidian/'
-obsidian() {
+oobsidian() {
   cd ~/Documents/ObsidianVault/Obsidian/ || return;
   git pull;
   nvim ~/Documents/ObsidianVault/Obsidian/;
@@ -81,3 +81,13 @@ export LIBCLANG_PATH="/home/adoucet/.rustup/toolchains/esp/xtensa-esp32-elf-clan
 
 source $HOME/export-esp.sh
 
+
+
+if [ -z "$SSH_AGENT_PID" ]; then
+    eval "$(ssh-agent -s)"
+fi
+
+if ! ssh-add -l > /dev/null; then
+    ssh-add ~/.ssh/gitlab_ed25519
+    ssh-add ~/.ssh/id_ed25519
+fi
