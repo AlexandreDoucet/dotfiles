@@ -3,11 +3,23 @@
 #wallpaper =  , $HOME/Pictures/wallpapers/i7gacbaq3aie1.jpeg
 #
 
-WALLPAPER_DIR="$HOME/Pictures/wallpapers/"
-CURRENT_WALL=$(hyprctl hyprpaper listloaded)
 
-# Get a random wallpaper that is not the current one
+#!/usr/bin/env bash
+
+WALLPAPER_DIR="$HOME/Pictures/wallpapers/"
+
+# get current loaded wallpaper file name
+CURRENT_WALL=$(hyprctl hyprpaper listloaded | head -n1)
+
+# choose random wallpaper except the current one
 WALLPAPER=$(find "$WALLPAPER_DIR" -type f ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1)
 
-# Apply the selected wallpaper
-hyprctl hyprpaper reload ,"$WALLPAPER"
+# unload the previous (optional but recommended)
+hyprctl hyprpaper unload all
+
+# preload new wallpaper
+hyprctl hyprpaper preload "$WALLPAPER"
+
+# actually set it (all monitors)
+hyprctl hyprpaper wallpaper ",$WALLPAPER"
+

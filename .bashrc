@@ -65,7 +65,7 @@ export PATH="$HOME/.config/dotfiles/scripts:$PATH"
 PS1='\[\033[01;32m\][\u@\h \[\033[01;34m\]\w\[\033[01;32m\]]\$ \[\033[00m\]$(__git_ps1 "\[\033[01;36m\](%s)\[\033[00m\]")\[\033[01;33m\]$(get_git_status.sh) \[\033[00m\]\$ '
 . "$HOME/.cargo/env"
 
-[[ "$(tty)" == /dev/tty1 ]] && Hyprland
+[[ "$(tty)" == /dev/tty1 ]] && start-hyprland
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -79,15 +79,15 @@ export LIBCLANG_PATH="/home/adoucet/.rustup/toolchains/esp/xtensa-esp32-elf-clan
 export PATH="/home/adoucet/.rustup/toolchains/esp/xtensa-esp-elf/esp-15.2.0_20250920/xtensa-esp-elf/bin:$PATH"
 export LIBCLANG_PATH="/home/adoucet/.rustup/toolchains/esp/xtensa-esp32-elf-clang/esp-20.1.1_20250829/esp-clang/lib"
 
-source $HOME/export-esp.sh
+#source $HOME/export-esp.sh
 
 
 
 if [ -z "$SSH_AGENT_PID" ]; then
-    eval "$(ssh-agent -s)"
+    eval "$(ssh-agent -s)" >/dev/null 2>&1
 fi
 
-if ! ssh-add -l > /dev/null; then
-    ssh-add ~/.ssh/gitlab_ed25519
-    ssh-add ~/.ssh/id_ed25519
+if ! ssh-add -l >/dev/null 2>&1; then
+    ssh-add ~/.ssh/gitlab_ed25519 >/dev/null 2>&1
+    ssh-add ~/.ssh/id_ed25519 >/dev/null 2>&1
 fi

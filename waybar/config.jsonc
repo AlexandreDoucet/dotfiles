@@ -24,13 +24,13 @@
     "backlight",
     "wireplumber",
     //"custom/audio-output",
+    "keyboard-state",
     "clock",
     "custom/separator",
     "group/custom-group",
     "custom/separator",
-    "custom/power",
+    "custom/power"
   ],
-
 
 
   //"custom/audio-output": {
@@ -47,8 +47,8 @@
     "modules": [
       "idle_inhibitor",
       "custom/bluetooth",
-      "custom/wifi",
-    ],
+      "custom/wifi"
+    ]
   },
 
   // Modules configuration
@@ -165,6 +165,21 @@
   //  "on-click": "pavucontrol",
   //},
 
+"keyboard-state": {
+  "numlock": false,
+  "capslock": false,
+  "format": "{layout_icon}",
+  "layout-map": {
+    "us": "US",
+    "ca": "CA"
+  },
+  "format-icons": {
+    "capslock": "",
+    "numlock": ""
+  },
+  "on-click": "hyprctl switchxkblayout logitech-usb-receiver-1 next"
+},
+
   "wireplumber": {
     "format": "{icon} {volume:>3}%",
     "format-muted": "󰖁 {volume:>3}%",
@@ -273,14 +288,14 @@
     "escape": true,
   },
 
-  "keyboard-state": {
-    "numlock": true,
-    "capslock": true,
-    "format": "{name} {icon}",
-    "format-icons": {
-      "locked": "",
-      "unlocked": "",
-    },
+//  "keyboard-state": {
+//    "numlock": true,
+//    "capslock": true,
+//    "format": "{name} {icon}",
+//    "format-icons": {
+//      "locked": "",
+//      "unlocked": "",
+//    },
   },
 
   "wlr/taskbar": {

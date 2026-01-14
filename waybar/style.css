@@ -176,3 +176,12 @@ label:focus {
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }
+
+#keyboard-state {
+  color: @highlight;
+  background-color: @bordercolor;
+  margin: 5px;
+  padding: 0px 8px;
+  border-radius: 5px;
+  font-weight: bold;
+}
