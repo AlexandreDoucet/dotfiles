@@ -23,7 +23,6 @@
     "temperature",
     "backlight",
     "wireplumber",
-    //"custom/audio-output",
     "keyboard-state",
     "clock",
     "custom/separator",
@@ -45,7 +44,7 @@
   "group/custom-group": {
     "orientation": "horizontal",
     "modules": [
-      "idle_inhibitor",
+      "custom/idle",
       "custom/bluetooth",
       "custom/wifi"
     ]
@@ -226,6 +225,13 @@
 
     "on-click": "$HOME/.config/waybar/scripts/toggle_hypridle.sh",
 
+  },
+
+  "custom/idle": {
+    "format": "{}",
+    "exec": "~/.config/waybar/scripts/idle_status.sh",
+    "interval": 1,
+      "on-click": "$HOME/.config/waybar/scripts/toggle_hypridle.sh",
   },
 
   "custom/power": {

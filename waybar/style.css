@@ -103,12 +103,9 @@ button:hover {
 #mode,
 #scratchpad,
 #custom-notification,
-#custom-wifi,
 #custom-kdeconnect,
-#custom-bluetooth,
 #custom-power,
 #custom-separator,
-#idle_inhibitor,
 #window,
 #mpd {
   padding: 0px 5px;
@@ -116,6 +113,7 @@ button:hover {
   color: @bordercolor;
 }
 
+#custom-idle,
 #custom-notification,
 #custom-wifi,
 #custom-kdeconnect,
@@ -123,6 +121,7 @@ button:hover {
 #custom-power,
 #idle_inhibitor {
   color: @bg;
+  padding: 0px 10px;
 }
 
 #clock,
