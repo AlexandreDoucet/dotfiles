@@ -223,8 +223,9 @@
       "activated": "󰈈",
       "deactivated": "󰈉",
     },
-    "on-click":{}
-    //todo
+
+    "on-click": "$HOME/.config/waybar/scripts/toggle_hypridle.sh",
+
   },
 
   "custom/power": {
