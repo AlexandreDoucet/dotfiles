@@ -102,10 +102,11 @@ for id in devices_identifier:
             break
         if name in kes or kes in name:
             id = sink_map.get(kes)
+
             for line in sinks_subsection.splitlines():
 
                 if id in line and not "*" in line:
                     good = True
                     subprocess.run(["wpctl", "set-default", sink_map.get(kes)])
-                    move_all_streams(sink_id)
+                    move_all_streams(id)
                     break

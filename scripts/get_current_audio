@@ -90,5 +90,5 @@ for dev_id in devices_identifier:
             good = False
             id = sink_map.get(kes)
             for line in sinks_subsection.splitlines():
-                if id in line and "*" in line:
+                if id + "." in line:
                     print(device_common_name[dev_id])
