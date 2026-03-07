@@ -8,9 +8,9 @@ current_dir=$(pwd)
 cd "$current_dir" ||  { echo ""; exit 0; }
 
 # Check if we're in a Git repository
-if [ ! -d ".git" ]; then
-  echo ""
-  exit 0  # Exit if not inside a Git repo
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo ""
+    exit 0
 fi
 # Get the Git status and store the result
 status=$(git status)
