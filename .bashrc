@@ -92,3 +92,10 @@ if ! ssh-add -l >/dev/null 2>&1; then
     ssh-add ~/.ssh/gitlab_ed25519 >/dev/null 2>&1
     ssh-add ~/.ssh/id_ed25519 >/dev/null 2>&1
 fi
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
+
+
+
