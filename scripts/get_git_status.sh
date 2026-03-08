@@ -7,48 +7,28 @@ current_dir=$(pwd)
 
 cd "$current_dir" ||  { echo ""; exit 0; }
 
-# Check if we're in a Git repository
-if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    echo ""
+if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
     exit 0
 fi
-# Get the Git status and store the result
-status=$(git status)
 
-# Echo the git status result
+status=$(git status 2>/dev/null)
 
-# Get the current terminal's working directory
+dirty=$(echo "$status" | grep "modified:" >/dev/null; echo $?)
+untracked=$(echo "$status" | grep "Untracked files" >/dev/null; echo $?)
+ahead=$(echo "$status" | grep "Your branch is ahead of" >/dev/null; echo $?)
+newfile=$(echo "$status" | grep "new file:" >/dev/null; echo $?)
+renamed=$(echo "$status" | grep "renamed:" >/dev/null; echo $?)
+deleted=$(echo "$status" | grep "deleted:" >/dev/null; echo $?)
 
+bits=""
 
-        status=`git status 2>&1 | tee`
-        dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
-        untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
-        ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
-        newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
-        renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
-        deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
-        bits=''
-        if [ "${renamed}" == "0" ]; then
-                #bits="!${bits}"
-                bits="!"
-        fi
-        if [ "${ahead}" == "0" ]; then
-                bits="!"
-        fi
-        if [ "${newfile}" == "0" ]; then
-                bits="!"
-        fi
-        if [ "${untracked}" == "0" ]; then
-                bits="!"
-        fi
-        if [ "${deleted}" == "0" ]; then
-                bits="!"
-        fi
-        if [ "${dirty}" == "0" ]; then
-                bits="!"
-        fi
-        if [ ! "${bits}" == "" ]; then
-                echo "${bits}"
-        else
-                echo ""
-        fi
+if [ "$renamed" = "0" ] || \
+   [ "$ahead" = "0" ] || \
+   [ "$newfile" = "0" ] || \
+   [ "$untracked" = "0" ] || \
+   [ "$deleted" = "0" ] || \
+   [ "$dirty" = "0" ]; then
+    bits="!"
+fi
+
+echo "$bits"
