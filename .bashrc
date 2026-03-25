@@ -15,7 +15,7 @@ alias grep='grep --color=auto'
 alias hypr_reload_paper='sh ~/.config/hypr/hyprpaper'
 alias obsidian_a='cd ~/Documents/ObsidianVault/Obsidian/ && git pull && nvim ~/Documents/ObsidianVault/Obsidian/'
 alias freecad="QT_QPA_PLATFORM=xcb freecad & disown"
-alias mkcd="$(mkdir $1 && cd $1)"
+alias mkcd="$(mkdir $1 && cd $1) <<"
 
 oobsidian() {
   cd ~/Documents/ObsidianVault/Obsidian/ || return;
