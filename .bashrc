@@ -5,6 +5,8 @@
 [[ $- != *i* ]] && return
 export LFS=/mnt/lfs
 
+export ADMIN_TOKEN="9831453f975cf972d913de84602f4c3d03eb9cb8a15a606a04fb17c6ca5d9410"
+
 
 source /usr/share/git/completion/git-prompt.sh
 # If not running interactively, don't do anything
@@ -14,7 +16,11 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias hypr_reload_paper='sh ~/.config/hypr/hyprpaper'
 alias obsidian_a='cd ~/Documents/ObsidianVault/Obsidian/ && git pull && nvim ~/Documents/ObsidianVault/Obsidian/'
-alias ls='ls -l'
+#alias ls='ls -l'
+
+alias noita_backup="~/.noita_backup/backup.sh"
+alias noita_restore="~/.noita_backup/restore.sh"
+
 
 freecad() {
     QT_QPA_PLATFORM=xcb command freecad & disown
