@@ -72,8 +72,6 @@ local userHome = "/home/adoucet/"
 hl.on("hyprland.start", function()
   hl.exec_cmd("hyprctl dispatch workspace 1 & hyprctl dispatch workspace 2")
 
-  hl.exec_cmd(terminal)
-
   hl.exec_cmd("hyprpaper")
   hl.exec_cmd("hypridle")
 
@@ -93,6 +91,8 @@ hl.on("hyprland.start", function()
 
   hl.exec_cmd("update_audio.sh")
   hl.exec_cmd("transmission-qt -m")
+
+  hl.exec_cmd(terminal)
 end)
 
 ----------------
@@ -346,8 +346,7 @@ end) -- SwapWorkspaceCombo
 for i = 1, 9 do
   --hl.bind(mainMod .. " + " .. i, hl.dsp.focus({ workspace = i }))
   hl.bind(mainMod .. " + " .. i, function()
-    hl.dispatch(hl.dsp.focus({ workspace = 2 * i - 1 }))
-    hl.dispatch(hl.dsp.focus({ workspace = 2 * i }))
+    hl.dispatch(hl.dsp.focus({ workspace = i }))
   end)
 end
 
