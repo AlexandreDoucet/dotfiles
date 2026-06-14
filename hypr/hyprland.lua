@@ -68,6 +68,8 @@ local userHome = "/home/adoucet/"
 ----------------
 
 hl.on("hyprland.start", function()
+  hl.exec_cmd("hyprctl dispatch workspace 1 & hyprctl dispatch workspace 2")
+
   hl.exec_cmd(terminal)
 
   hl.exec_cmd("hyprpaper")
@@ -78,8 +80,6 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("blueman-applet")
   hl.exec_cmd("mpt-detect")
 
-  -- Kept close to your original startup behavior.
-  hl.exec_cmd("hyprctl dispatch workspace 1 & hyprctl dispatch workspace 2")
 
   hl.exec_cmd("wl-paste --type text --watch cliphist store")
   hl.exec_cmd("wl-paste --type image --watch cliphist store")
@@ -287,9 +287,83 @@ hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.swap({ direction = "r" }))
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.swap({ direction = "u" }))
 hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.swap({ direction = "d" }))
 
+
+-- SwapWorkspaceCombo
+hl.bind(mainMod .. " + CTRL + right", function()
+  local active = hl.get_active_workspace()
+
+  if active ~= nil then
+    local active_id = active.id
+
+    -- Convert current workspace to the first workspace in its pair.
+    -- 1 or 2 -> 1
+    -- 3 or 4 -> 3
+    -- 5 or 6 -> 5
+    if active_id % 2 == 0 then
+      active_id = active_id - 1
+    end
+
+    -- Move to next pair.
+    active_id = active_id + 2
+
+    -- Wrap around.
+    if active_id > 9 then
+      active_id = 1
+    end
+
+    hl.notification.create({
+      text = tostring(active_id),
+      timeout = 3000,
+      icon = "ok"
+    })
+
+    hl.dispatch(hl.dsp.focus({ workspace = active_id }))
+    hl.dispatch(hl.dsp.focus({ workspace = active_id + 1 }))
+  end
+end)
+-- SwapWorkspaceCombo
+hl.bind(mainMod .. " + CTRL + left", function()
+  local active = hl.get_active_workspace()
+
+  if active ~= nil then
+    local active_id = active.id
+
+    -- Convert current workspace to the first workspace in its pair.
+    -- 1 or 2 -> 1
+    -- 3 or 4 -> 3
+    -- 5 or 6 -> 5
+    if active_id % 2 == 0 then
+      active_id = active_id - 1
+    end
+
+    -- Move to next pair.
+    active_id = active_id - 2
+
+    -- Wrap around.
+    if active_id > 9 then
+      active_id = 1
+    end
+
+    --hl.notification.create({
+    --  text = tostring(active_id),
+    --  timeout = 3000,
+    --  icon = "ok"
+    --})
+
+    if active_id > 0 then
+      hl.dispatch(hl.dsp.focus({ workspace = active_id }))
+      hl.dispatch(hl.dsp.focus({ workspace = active_id + 1 }))
+    end
+  end
+end)
+
 -- Switch workspaces with mainMod + [1-9]
 for i = 1, 9 do
-  hl.bind(mainMod .. " + " .. i, hl.dsp.focus({ workspace = i }))
+  --hl.bind(mainMod .. " + " .. i, hl.dsp.focus({ workspace = i }))
+  hl.bind(mainMod .. " + " .. i, function()
+    hl.dispatch(hl.dsp.focus({ workspace = 2 * i - 1 }))
+    hl.dispatch(hl.dsp.focus({ workspace = 2 * i }))
+  end)
 end
 
 -- Move active window to workspace with mainMod + SHIFT + [1-9]
