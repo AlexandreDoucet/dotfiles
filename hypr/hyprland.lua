@@ -9,19 +9,19 @@
 -- MONITORS
 ----------------
 
-local monitorL = "desc:Dell Inc. DELL ST2220L 4DDG114U09DS"
+--local monitorL = "desc:Dell Inc. DELL ST2220L 4DDG114U09DS"
 local monitorM = "desc:Microstep MSI MAG321CQR KA3H079302793"
 local monitorR = "desc:Hewlett Packard HP 27er 3CM74006TD"
 
 -- Fallback for unspecified monitors, if needed:
 -- hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
 
-hl.monitor({
-  output = monitorL,
-  mode = "preferred",
-  position = "-1920x0",
-  scale = "auto",
-})
+--hl.monitor({
+--  output = monitorL,
+--  mode = "preferred",
+--  position = "-1920x0",
+--  scale = "auto",
+--})
 
 hl.monitor({
   output = monitorM,
@@ -54,6 +54,19 @@ for _, workspace in ipairs({ 2, 4, 6, 8 }) do
   })
 end
 
+-- Default startup workspaces
+hl.workspace_rule({
+  workspace = "1",
+  monitor = monitorM,
+  default = true,
+})
+
+hl.workspace_rule({
+  workspace = "2",
+  monitor = monitorR,
+  default = true,
+})
+
 ----------------
 -- PROGRAMS
 ----------------
@@ -70,7 +83,11 @@ local userHome = "/home/adoucet/"
 ----------------
 
 hl.on("hyprland.start", function()
-  hl.exec_cmd("hyprctl dispatch workspace 1 & hyprctl dispatch workspace 2")
+  hl.exec_cmd("hyprctl dispatch focusmonitor " .. monitorR)
+  hl.exec_cmd("hyprctl dispatch workspace 2")
+
+  hl.exec_cmd("hyprctl dispatch focusmonitor " .. monitorM)
+  hl.exec_cmd("hyprctl dispatch workspace 1")
 
   hl.exec_cmd("hyprpaper")
   hl.exec_cmd("hypridle")
@@ -319,11 +336,11 @@ local function workspace_group_switch(backwards)
       active_id = 1
     end
 
-    hl.notification.create({
-      text = tostring(active_id),
-      timeout = 3000,
-      icon = "ok"
-    })
+    --hl.notification.create({
+    --  text = tostring(active_id),
+    --  timeout = 3000,
+    --  icon = "ok"
+    --})
     -- Focus all workspaces in the group.
     local reverse = monitor_count - 1
     for i = 0, monitor_count - 1 do
