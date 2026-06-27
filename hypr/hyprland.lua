@@ -71,7 +71,7 @@ hl.workspace_rule({
 -- PROGRAMS
 ----------------
 
-local terminal = "kitty"
+local terminal = "ghostty"
 -- local terminal = "ghostty"
 
 local fileManager = "dolphin"
