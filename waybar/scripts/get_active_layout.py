@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 import subprocess
-import csv
 import json
-
 
 def main(querry_name):
     result = subprocess.run(

@@ -168,9 +168,10 @@
   //},
 
 "custom/layout": {
-  "exec": "$HOME/.config/waybar/scripts/get_active_layout.py active_keymap",
+  //"exec": "$HOME/.config/waybar/scripts/get_active_layout.py active_keymap",
+  "exec": "waybar-get-active-layout active_keymap",
   "interval": 1,
-  "on-click": "hyprctl switchxkblayout $($HOME/.config/waybar/scripts/get_active_layout.py name) next"
+  "on-click": "hyprctl switchxkblayout $(waybar-get-active-layout name) next"
 },
 
 
@@ -240,9 +241,10 @@
 
   "custom/idle": {
     "format": "{}",
-    "exec": "~/.config/waybar/scripts/idle_status.sh",
+    "exec": "waybar-idle-status",
     "interval": 1,
-      "on-click": "$HOME/.config/waybar/scripts/toggle_hypridle.sh"
+      //"on-click": "$HOME/.config/waybar/scripts/toggle_hypridle.sh"
+      "on-click": "waybar-toggle-hypridle"
   },
 
   "custom/power": {
