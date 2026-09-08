@@ -83,6 +83,8 @@ local userHome = "/home/adoucet/"
 ----------------
 
 hl.on("hyprland.start", function()
+  hl.exec_cmd("dbus-update-activation-environment --systemd --all")
+
   hl.exec_cmd("hyprctl dispatch focusmonitor " .. monitorR)
   hl.exec_cmd("hyprctl dispatch workspace 2")
 

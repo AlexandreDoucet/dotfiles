@@ -102,22 +102,19 @@
     "format-alt": "{:%Y-%m-%d %H:%M:%S  }"
   },
 
-  "temperature": {
-    // "thermal-zone": 2,
-    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-    // "format-critical": "{temperatureC}°C {icon}",
+"temperature": {
     "critical-threshold": 80,
     "interval": 2,
     "format": " {temperatureC:>2}°C",
     "format-icons": ["", "", ""],
-    "on-click": "hyprctl dispatcher togglespecialworkspace monitor"
-  },
+    "on-click": "hyprctl dispatch 'hl.dsp.workspace.toggle_special(\"monitor\")'"
+},
 
-  "cpu": {
-    "interval": 2,
-    "format": " {usage:>2}%",
-    "on-click": "hyprctl dispatcher togglespecialworkspace monitor"
-  },
+"cpu": {
+  "interval": 2,
+  "format": " {usage:>2}%",
+  "on-click": "hyprctl dispatch 'hl.dsp.workspace.toggle_special(\"monitor\")'"
+},
 
   "memory": {
     "interval": 2,
@@ -199,7 +196,7 @@
     "format-icons": ["", "", ""],
     "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     //"on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-    "on-click" : "update_audio && pavucontrol"
+    "on-click" : "system-update-audio && pavucontrol"
     //"on-click-right" : "pavucontrol"
   },
 
@@ -268,7 +265,7 @@
     "format": "{icon}",
     "format-icons": "",
     "exec-on-event": "true",
-    "on-click": "$HOME/.config/waybar/scripts/rofi-wifi",
+    "on-click": "nix-rofi-wifi",
     "tooltip-format": "Wifi Menu"
   },
 
