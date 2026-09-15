@@ -138,12 +138,17 @@ hl.on("hyprland.start", function()
   hl.exec_cmd(terminal)
 end)
 
+
+----------------
+-- CURSOR
+----------------
 ----------------
 -- ENVIRONMENT
 ----------------
 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
+
 
 ----------------
 -- LOOK AND FEEL
@@ -231,6 +236,12 @@ hl.config({
   xwayland = {
     enabled = true,
   },
+
+
+  cursor = {
+    persistent_warps = true,
+    warp_on_change_workspace = 1,
+  },
 })
 
 ----------------
@@ -301,8 +312,9 @@ hl.bind("SUPER + P", hl.dsp.exec_cmd("hyprpaper.sh"))
 -- Basic app/window binds
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", hl.dsp.exit())
---hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("uwsm stop"))
+--hl.bind(mainMod .. " + M", hl.dsp.exit())
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("uwsm stop"))
+
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
