@@ -10,8 +10,23 @@
 ----------------
 
 --local monitorL = "desc:Dell Inc. DELL ST2220L 4DDG114U09DS"
-local monitorM = "desc:Microstep MSI MAG321CQR KA3H079302793"
-local monitorR = "desc:Hewlett Packard HP 27er 3CM74006TD"
+local monitorL = {
+  description = "desc:Hewlett Packard HP 27er 3CM74006TD",
+  mode = "preferred",
+  width_pix = 1920,
+  height_pix = 1080,
+  refresh = 60,
+}
+
+local monitorM = {
+  description = "desc:Microstep MSI MAG321CQR KA3H079302793",
+  mode = "2560x1440@144",
+  width_pix = 2560,
+  height_pix = 1440,
+  refresh = 144,
+}
+
+
 
 -- Fallback for unspecified monitors, if needed:
 -- hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
@@ -24,46 +39,57 @@ local monitorR = "desc:Hewlett Packard HP 27er 3CM74006TD"
 --})
 
 hl.monitor({
-  output = monitorM,
-  mode = "2560x1440@144",
+  output = monitorM.description,
+  mode = monitorM.mode,
   position = "0x-360",
   scale = "auto",
 })
 
 hl.monitor({
-  output = monitorR,
-  mode = "preferred",
-  position = "2560x0",
+  output = monitorL.description,
+  mode = monitorL.mode,
+  position = "-1920x0",
   scale = "auto",
 })
 
+for i = 1, math.floor(10 / 2) do
+  for id, monitor in ipairs({ monitorM, monitorL }) do
+    local workspace = (2 * i - 1 + id)
+    print(workspace)
+
+    hl.workspace_rule({
+      workspace = tostring(workspace),
+      monitor = monitor.description,
+    })
+  end
+end
 
 
 -- Workspace-to-monitor mapping
-for _, workspace in ipairs({ 1, 3, 5, 7 }) do
-  hl.workspace_rule({
-    workspace = tostring(workspace),
-    monitor = monitorM,
-  })
-end
-
-for _, workspace in ipairs({ 2, 4, 6, 8 }) do
-  hl.workspace_rule({
-    workspace = tostring(workspace),
-    monitor = monitorR,
-  })
-end
+--for _, workspace in ipairs(monitorM.workspaceID) do
+--  hl.workspace_rule({
+--    workspace = tostring(workspace),
+--    monitor = monitorM.description,
+--  })
+--end
+--
+--for _, workspace in ipairs(monitorL.workspaceID) do
+--  hl.workspace_rule({
+--    workspace = tostring(workspace),
+--    monitor = monitorL.description,
+--  })
+--end
 
 -- Default startup workspaces
 hl.workspace_rule({
   workspace = "1",
-  monitor = monitorM,
+  monitor = monitorL.description,
   default = true,
 })
 
 hl.workspace_rule({
   workspace = "2",
-  monitor = monitorR,
+  monitor = monitorM.description,
   default = true,
 })
 
@@ -72,9 +98,7 @@ hl.workspace_rule({
 ----------------
 
 local terminal = "ghostty"
--- local terminal = "ghostty"
-
-local fileManager = "dolphin"
+local fileManager = "nemo"
 local menu = "rofi -auto-select -show drun -show-icons"
 local userHome = "/home/adoucet/"
 
@@ -85,10 +109,10 @@ local userHome = "/home/adoucet/"
 hl.on("hyprland.start", function()
   hl.exec_cmd("dbus-update-activation-environment --systemd --all")
 
-  hl.exec_cmd("hyprctl dispatch focusmonitor " .. monitorR)
+  hl.exec_cmd("hyprctl dispatch focusmonitor " .. monitorL.description)
   hl.exec_cmd("hyprctl dispatch workspace 2")
 
-  hl.exec_cmd("hyprctl dispatch focusmonitor " .. monitorM)
+  hl.exec_cmd("hyprctl dispatch focusmonitor " .. monitorM.description)
   hl.exec_cmd("hyprctl dispatch workspace 1")
 
   hl.exec_cmd("hyprpaper")
@@ -278,6 +302,7 @@ hl.bind("SUPER + P", hl.dsp.exec_cmd("hyprpaper.sh"))
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exit())
+--hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("uwsm stop"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
