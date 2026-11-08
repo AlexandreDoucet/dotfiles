@@ -248,7 +248,7 @@
     "format": "{icon}",
     "format-icons": " ", //  
     "exec-on-event": "true",
-    "on-click": "$HOME/.config/waybar/scripts/rofi-power",
+    "on-click": "rofi-power",
     "tooltip-format": "Power Menu"
   },
 
@@ -257,7 +257,7 @@
     "format": "{icon}",
     "format-icons": "",
     "exec-on-event": "true",
-    "on-click": "$HOME/.config/waybar/scripts/rofi-bluetooth",
+    "on-click": "rofi-bluetooth",
     "tooltip-format": "Bluetooth Menu"
   },
 
