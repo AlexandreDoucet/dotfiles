@@ -11,22 +11,20 @@
 
 --local monitorL = "desc:Dell Inc. DELL ST2220L 4DDG114U09DS"
 local monitorL = {
-  description = "desc:Hewlett Packard HP 27er 3CM74006TD",
-  mode = "preferred",
-  width_pix = 1920,
-  height_pix = 1080,
-  refresh = 60,
+	description = "desc:Hewlett Packard HP 27er 3CM74006TD",
+	mode = "preferred",
+	width_pix = 1920,
+	height_pix = 1080,
+	refresh = 60,
 }
 
 local monitorM = {
-  description = "desc:Microstep MSI MAG321CQR KA3H079302793",
-  mode = "2560x1440@144",
-  width_pix = 2560,
-  height_pix = 1440,
-  refresh = 144,
+	description = "desc:Microstep MSI MAG321CQR KA3H079302793",
+	mode = "2560x1440@144",
+	width_pix = 2560,
+	height_pix = 1440,
+	refresh = 144,
 }
-
-
 
 -- Fallback for unspecified monitors, if needed:
 -- hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
@@ -39,31 +37,30 @@ local monitorM = {
 --})
 
 hl.monitor({
-  output = monitorM.description,
-  mode = monitorM.mode,
-  position = "0x-360",
-  scale = "auto",
+	output = monitorM.description,
+	mode = monitorM.mode,
+	position = "0x-360",
+	scale = "auto",
 })
 
 hl.monitor({
-  output = monitorL.description,
-  mode = monitorL.mode,
-  position = "-1920x0",
-  scale = "auto",
+	output = monitorL.description,
+	mode = monitorL.mode,
+	position = "-1920x0",
+	scale = "auto",
 })
 
 for i = 1, math.floor(10 / 2) do
-  for id, monitor in ipairs({ monitorM, monitorL }) do
-    local workspace = (2 * i - 1 + id)
-    print(workspace)
+	for id, monitor in ipairs({ monitorM, monitorL }) do
+		local workspace = (2 * i - 1 + id)
+		print(workspace)
 
-    hl.workspace_rule({
-      workspace = tostring(workspace),
-      monitor = monitor.description,
-    })
-  end
+		hl.workspace_rule({
+			workspace = tostring(workspace),
+			monitor = monitor.description,
+		})
+	end
 end
-
 
 -- Workspace-to-monitor mapping
 --for _, workspace in ipairs(monitorM.workspaceID) do
@@ -82,15 +79,15 @@ end
 
 -- Default startup workspaces
 hl.workspace_rule({
-  workspace = "1",
-  monitor = monitorL.description,
-  default = true,
+	workspace = "1",
+	monitor = monitorL.description,
+	default = true,
 })
 
 hl.workspace_rule({
-  workspace = "2",
-  monitor = monitorM.description,
-  default = true,
+	workspace = "2",
+	monitor = monitorM.description,
+	default = true,
 })
 
 ----------------
@@ -107,37 +104,35 @@ local userHome = "/home/adoucet/"
 ----------------
 
 hl.on("hyprland.start", function()
-  hl.exec_cmd("dbus-update-activation-environment --systemd --all")
+	hl.exec_cmd("dbus-update-activation-environment --systemd --all")
 
-  hl.exec_cmd("hyprctl dispatch focusmonitor " .. monitorL.description)
-  hl.exec_cmd("hyprctl dispatch workspace 2")
+	hl.exec_cmd("hyprctl dispatch focusmonitor " .. monitorL.description)
+	hl.exec_cmd("hyprctl dispatch workspace 2")
 
-  hl.exec_cmd("hyprctl dispatch focusmonitor " .. monitorM.description)
-  hl.exec_cmd("hyprctl dispatch workspace 1")
+	hl.exec_cmd("hyprctl dispatch focusmonitor " .. monitorM.description)
+	hl.exec_cmd("hyprctl dispatch workspace 1")
 
-  hl.exec_cmd("hyprpaper")
-  hl.exec_cmd("hypridle")
+	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("hypridle")
 
-  hl.exec_cmd("waybar")
-  hl.exec_cmd("nm-applet")
-  hl.exec_cmd("blueman-applet")
-  hl.exec_cmd("mpt-detect")
+	hl.exec_cmd("waybar")
+	hl.exec_cmd("nm-applet")
+	hl.exec_cmd("blueman-applet")
+	hl.exec_cmd("mpt-detect")
 
+	hl.exec_cmd("wl-paste --type text --watch cliphist store")
+	hl.exec_cmd("wl-paste --type image --watch cliphist store")
 
-  hl.exec_cmd("wl-paste --type text --watch cliphist store")
-  hl.exec_cmd("wl-paste --type image --watch cliphist store")
+	hl.exec_cmd("systemctl --user start hyprpolkitagent")
 
-  hl.exec_cmd("systemctl --user start hyprpolkitagent")
+	hl.exec_cmd(userHome .. ".config/dotfiles/scripts/hyprpaper.sh")
+	hl.exec_cmd(userHome .. ".config/dotfiles/scripts/mount_rclone.sh")
 
-  hl.exec_cmd(userHome .. ".config/dotfiles/scripts/hyprpaper.sh")
-  hl.exec_cmd(userHome .. ".config/dotfiles/scripts/mount_rclone.sh")
+	hl.exec_cmd("update_audio.sh")
+	hl.exec_cmd("transmission-qt -m")
 
-  hl.exec_cmd("update_audio.sh")
-  hl.exec_cmd("transmission-qt -m")
-
-  hl.exec_cmd(terminal)
+	hl.exec_cmd(terminal)
 end)
-
 
 ----------------
 -- CURSOR
@@ -149,99 +144,97 @@ end)
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 
-
 ----------------
 -- LOOK AND FEEL
 ----------------
 
 hl.config({
-  general = {
-    gaps_in = 3,
-    gaps_out = 5,
+	general = {
+		gaps_in = 3,
+		gaps_out = 5,
 
-    border_size = 3,
+		border_size = 3,
 
-    col = {
-      active_border = {
-        colors = {
-          "rgba(33ccffee)",
-          "rgba(00ff99ee)",
-        },
-        angle = -180,
-      },
-      inactive_border = "rgba(595959aa)",
-    },
+		col = {
+			active_border = {
+				colors = {
+					"rgba(33ccffee)",
+					"rgba(00ff99ee)",
+				},
+				angle = -180,
+			},
+			inactive_border = "rgba(595959aa)",
+		},
 
-    resize_on_border = false,
-    allow_tearing = false,
-    layout = "dwindle",
-  },
+		resize_on_border = false,
+		allow_tearing = false,
+		layout = "dwindle",
+	},
 
-  decoration = {
-    rounding = 10,
+	decoration = {
+		rounding = 10,
 
-    active_opacity = 1.0,
-    inactive_opacity = 1.0,
+		active_opacity = 1.0,
+		inactive_opacity = 1.0,
 
-    shadow = {
-      enabled = true,
-      range = 4,
-      render_power = 3,
-      color = 0xee1a1a1a,
-    },
+		shadow = {
+			enabled = true,
+			range = 4,
+			render_power = 3,
+			color = 0xee1a1a1a,
+		},
 
-    blur = {
-      enabled = true,
-      size = 3,
-      passes = 1,
-      vibrancy = 0.1696,
-    },
-  },
+		blur = {
+			enabled = true,
+			size = 3,
+			passes = 1,
+			vibrancy = 0.1696,
+		},
+	},
 
-  animations = {
-    enabled = true,
-  },
+	animations = {
+		enabled = true,
+	},
 
-  -- dwindle:pseudotile was removed in Hyprland 0.55.
-  dwindle = {
-    preserve_split = true,
-  },
+	-- dwindle:pseudotile was removed in Hyprland 0.55.
+	dwindle = {
+		preserve_split = true,
+	},
 
-  master = {
-    new_status = "master",
-  },
+	master = {
+		new_status = "master",
+	},
 
-  misc = {
-    force_default_wallpaper = -1,
-    disable_hyprland_logo = false,
-  },
+	misc = {
+		force_default_wallpaper = -1,
+		disable_hyprland_logo = false,
+	},
 
-  input = {
-    kb_layout = "us,ca",
-    kb_variant = ",multix",
-    kb_model = "",
-    kb_options = "",
-    kb_rules = "",
+	input = {
+		kb_layout = "us,ca",
+		kb_variant = ",multix",
+		kb_model = "",
+		kb_options = "",
+		kb_rules = "",
 
-    follow_mouse = 1,
-    sensitivity = 0,
+		follow_mouse = 1,
+		sensitivity = 0,
 
-    numlock_by_default = true,
+		numlock_by_default = true,
 
-    touchpad = {
-      natural_scroll = false,
-    },
-  },
+		touchpad = {
+			natural_scroll = false,
+		},
+	},
 
-  xwayland = {
-    enabled = true,
-  },
+	xwayland = {
+		enabled = true,
+	},
 
-
-  cursor = {
-    persistent_warps = true,
-    warp_on_change_workspace = 1,
-  },
+	cursor = {
+		persistent_warps = true,
+		warp_on_change_workspace = 1,
+	},
 })
 
 ----------------
@@ -249,28 +242,28 @@ hl.config({
 ----------------
 
 hl.curve("easeOutQuint", {
-  type = "bezier",
-  points = { { 0.23, 1 }, { 0.32, 1 } },
+	type = "bezier",
+	points = { { 0.23, 1 }, { 0.32, 1 } },
 })
 
 hl.curve("easeInOutCubic", {
-  type = "bezier",
-  points = { { 0.65, 0.05 }, { 0.36, 1 } },
+	type = "bezier",
+	points = { { 0.65, 0.05 }, { 0.36, 1 } },
 })
 
 hl.curve("linear", {
-  type = "bezier",
-  points = { { 0, 0 }, { 1, 1 } },
+	type = "bezier",
+	points = { { 0, 0 }, { 1, 1 } },
 })
 
 hl.curve("almostLinear", {
-  type = "bezier",
-  points = { { 0.5, 0.5 }, { 0.75, 1.0 } },
+	type = "bezier",
+	points = { { 0.5, 0.5 }, { 0.75, 1.0 } },
 })
 
 hl.curve("quick", {
-  type = "bezier",
-  points = { { 0.15, 0 }, { 0.1, 1 } },
+	type = "bezier",
+	points = { { 0.15, 0 }, { 0.1, 1 } },
 })
 
 hl.animation({ leaf = "global", enabled = true, speed = 10, bezier = "default" })
@@ -295,8 +288,8 @@ hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "a
 ----------------
 
 hl.device({
-  name = "epic-mouse-v1",
-  sensitivity = -0.5,
+	name = "epic-mouse-v1",
+	sensitivity = -0.5,
 })
 
 ----------------
@@ -321,7 +314,7 @@ hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 --hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("systemctl suspend"))
+--hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("systemctl suspend"))
 
 -- Duplicate from your old config
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(fileManager))
@@ -351,70 +344,68 @@ hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.swap({ direction = "r" }))
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.swap({ direction = "u" }))
 hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.swap({ direction = "d" }))
 
-
 local function workspace_group_switch(backwards)
-  local active = hl.get_active_workspace()
-  local monitors = hl.get_monitors()
-  local monitor_count = #monitors
+	local active = hl.get_active_workspace()
+	local monitors = hl.get_monitors()
+	local monitor_count = #monitors
 
-  if active ~= nil then
-    local active_id = active.id
+	if active ~= nil then
+		local active_id = active.id
 
-    -- Convert current workspace to the first workspace in its monitor group.
-    active_id = active_id - ((active_id - 1) % monitor_count)
+		-- Convert current workspace to the first workspace in its monitor group.
+		active_id = active_id - ((active_id - 1) % monitor_count)
 
-    if backwards == true then
-      active_id = active_id - monitor_count
-    else
-      active_id = active_id + monitor_count
-    end
+		if backwards == true then
+			active_id = active_id - monitor_count
+		else
+			active_id = active_id + monitor_count
+		end
 
-    -- Wrap around.
-    -- Assuming workspaces 1 through 9.
-    if active_id > 9 then
-      active_id = 1
-    end
+		-- Wrap around.
+		-- Assuming workspaces 1 through 9.
+		if active_id > 9 then
+			active_id = 1
+		end
 
-    if active_id < 1 then
-      -- Last group start for 1..9.
-      --active_id = 9 - ((9 - 1) % monitor_count)
-      active_id = 1
-    end
+		if active_id < 1 then
+			-- Last group start for 1..9.
+			--active_id = 9 - ((9 - 1) % monitor_count)
+			active_id = 1
+		end
 
-    --hl.notification.create({
-    --  text = tostring(active_id),
-    --  timeout = 3000,
-    --  icon = "ok"
-    --})
-    -- Focus all workspaces in the group.
-    local reverse = monitor_count - 1
-    for i = 0, monitor_count - 1 do
-      j = reverse - i
-      hl.dispatch(hl.dsp.focus({ workspace = active_id + j }))
-    end
-  end
+		--hl.notification.create({
+		--  text = tostring(active_id),
+		--  timeout = 3000,
+		--  icon = "ok"
+		--})
+		-- Focus all workspaces in the group.
+		local reverse = monitor_count - 1
+		for i = 0, monitor_count - 1 do
+			j = reverse - i
+			hl.dispatch(hl.dsp.focus({ workspace = active_id + j }))
+		end
+	end
 end
 
 hl.bind(mainMod .. " + CTRL + right", function()
-  workspace_group_switch(false)
+	workspace_group_switch(false)
 end)
 
 hl.bind(mainMod .. " + CTRL + left", function()
-  workspace_group_switch(true)
+	workspace_group_switch(true)
 end) -- SwapWorkspaceCombo
-
 
 -- Switch workspaces with mainMod + [1-9]
 for i = 1, 9 do
-  --hl.bind(mainMod .. " + " .. i, hl.dsp.focus({ workspace = i }))
-  hl.bind(mainMod .. " + " .. i, function()
-    hl.dispatch(hl.dsp.focus({ workspace = i }))
-  end)
+	--hl.bind(mainMod .. " + " .. i, hl.dsp.focus({ workspace = i }))
+	hl.bind(mainMod .. " + " .. i, function()
+		hl.dispatch(hl.dsp.focus({ workspace = i }))
+	end)
 end
 
 -- Move active window to workspace with mainMod + SHIFT + [1-9]
 for i = 1, 9 do
-  hl.bind(mainMod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
+	hl.bind(mainMod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
 end
 
 -- Special workspace: magic
@@ -435,37 +426,37 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Multimedia keys
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_SINK@ 5%+"), {
-  locked = true,
-  repeating = true,
+	locked = true,
+	repeating = true,
 })
 
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_SINK@ 5%-"), {
-  locked = true,
-  repeating = true,
+	locked = true,
+	repeating = true,
 })
 
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_SINK@ toggle"), {
-  locked = true,
-  repeating = true,
+	locked = true,
+	repeating = true,
 })
 
 -- Preserved from your old config. If this was meant to mute the microphone,
 -- change @DEFAULT_SINK@ to @DEFAULT_SOURCE@.
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_SINK@ toggle"), {
-  locked = true,
-  repeating = true,
+	locked = true,
+	repeating = true,
 })
 
 hl.bind("SUPER + F1", hl.dsp.exec_cmd("~/.config/dotfiles/scripts/update_audio"))
 
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s 10%+"), {
-  locked = true,
-  repeating = true,
+	locked = true,
+	repeating = true,
 })
 
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 10%-"), {
-  locked = true,
-  repeating = true,
+	locked = true,
+	repeating = true,
 })
 
 -- Requires playerctl
